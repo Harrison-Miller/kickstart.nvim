@@ -183,7 +183,7 @@ vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower win
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
 if vim.uv.os_uname().sysname == 'Darwin' then
-  -- Use Shift++arrows to switch between windows
+  -- Use Shift+arrows to switch between windows
   vim.keymap.set('n', '<S-left>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
   vim.keymap.set('n', '<S-right>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
   vim.keymap.set('n', '<S-down>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
@@ -988,7 +988,7 @@ require('lazy').setup({
   -- require 'kickstart.plugins.debug',
   -- require 'kickstart.plugins.indent_line',
   -- require 'kickstart.plugins.lint',
-  -- require 'kickstart.plugins.autopairs',
+  require 'kickstart.plugins.autopairs',
   -- require 'kickstart.plugins.neo-tree',
   -- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
 
