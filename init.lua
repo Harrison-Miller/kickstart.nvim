@@ -84,7 +84,7 @@ P.S. You can delete this when you're done too. It's your config now! :)
 --]]
 
 local darwin = vim.uv.os_uname().sysname == 'Darwin'
-local android = string.find(vim.env.PREFIX, 'termux')
+local android = string.find(vim.env.PREFIX or '', 'termux')
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
