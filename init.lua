@@ -83,6 +83,8 @@ I hope you enjoy your Neovim journey,
 P.S. You can delete this when you're done too. It's your config now! :)
 --]]
 
+local darwin = vim.uv.os_uname().sysname == 'Darwin'
+local android = string.find(vim.env.PREFIX, 'termux')
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
@@ -182,7 +184,7 @@ vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right win
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
-if vim.uv.os_uname().sysname == 'Darwin' then
+if darwin then
   -- Use Shift+arrows to switch between windows
   vim.keymap.set('n', '<S-left>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
   vim.keymap.set('n', '<S-right>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
@@ -190,10 +192,10 @@ if vim.uv.os_uname().sysname == 'Darwin' then
   vim.keymap.set('n', '<S-up>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
   -- Use Shift+arrows to exit terminal and switch between windows
-  vim.keymap.set('n', '<S-left>', '<C-\\><C-n><C-w><C-h>', { desc = 'Move focus to the left window' })
-  vim.keymap.set('n', '<S-right>', '<C-\\><C-n><C-w><C-l>', { desc = 'Move focus to the right window' })
-  vim.keymap.set('n', '<S-down>', '<C-\\><C-n><C-w><C-j>', { desc = 'Move focus to the lower window' })
-  vim.keymap.set('n', '<S-up>', '<C-\\><C-n><C-w><C-k>', { desc = 'Move focus to the upper window' })
+  vim.keymap.set('t', '<S-left>', '<C-\\><C-n><C-w><C-h>', { desc = 'Move focus to the left window' })
+  vim.keymap.set('t', '<S-right>', '<C-\\><C-n><C-w><C-l>', { desc = 'Move focus to the right window' })
+  vim.keymap.set('t', '<S-down>', '<C-\\><C-n><C-w><C-j>', { desc = 'Move focus to the lower window' })
+  vim.keymap.set('t', '<S-up>', '<C-\\><C-n><C-w><C-k>', { desc = 'Move focus to the upper window' })
 else
   -- Use CTRL+arrows to switch between windows
   vim.keymap.set('n', '<C-left>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
@@ -202,10 +204,10 @@ else
   vim.keymap.set('n', '<C-up>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
   -- Use CTRL+arrows to exit terminal and switch between windows
-  vim.keymap.set('n', '<C-left>', '<C-\\><C-n><C-w><C-h>', { desc = 'Move focus to the left window' })
-  vim.keymap.set('n', '<C-right>', '<C-\\><C-n><C-w><C-l>', { desc = 'Move focus to the right window' })
-  vim.keymap.set('n', '<C-down>', '<C-\\><C-n><C-w><C-j>', { desc = 'Move focus to the lower window' })
-  vim.keymap.set('n', '<C-up>', '<C-\\><C-n><C-w><C-k>', { desc = 'Move focus to the upper window' })
+  vim.keymap.set('t', '<C-left>', '<C-\\><C-n><C-w><C-h>', { desc = 'Move focus to the left window' })
+  vim.keymap.set('t', '<C-right>', '<C-\\><C-n><C-w><C-l>', { desc = 'Move focus to the right window' })
+  vim.keymap.set('t', '<C-down>', '<C-\\><C-n><C-w><C-j>', { desc = 'Move focus to the lower window' })
+  vim.keymap.set('t', '<C-up>', '<C-\\><C-n><C-w><C-k>', { desc = 'Move focus to the upper window' })
 end
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
@@ -634,7 +636,6 @@ require('lazy').setup({
       --   end
       --   vim.diagnostic.config { signs = { text = diagnostic_signs } }
       -- end
-
       -- LSP servers and clients are able to communicate to each other what features they support.
       --  By default, Neovim doesn't support everything that is in the LSP specification.
       --  When you add nvim-cmp, luasnip, etc. Neovim now has *more* capabilities.
@@ -668,7 +669,7 @@ require('lazy').setup({
 
       local ensure_installed = vim.tbl_keys(servers or {})
       local mason_autoinstall = true
-      if vim.uv.os_uname().sysname ~= 'android' then
+      if not android then
         vim.list_extend(ensure_installed, {
           lua_ls = {
             settings = {
