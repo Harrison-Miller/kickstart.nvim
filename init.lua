@@ -1,5 +1,4 @@
 --[[
-
 =====================================================================
 ==================== READ THIS BEFORE CONTINUING ====================
 =====================================================================
@@ -174,12 +173,6 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 -- or just use <C-\><C-n> to exit terminal mode
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
--- TIP: Disable arrow keys in normal mode
--- vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
--- vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
--- vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
--- vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
-
 -- Keybinds to make split navigation easier.
 --  Use CTRL+<hjkl> to switch between windows
 --
@@ -189,6 +182,31 @@ vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right win
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
+if vim.uv.os_uname().sysname == 'Darwin' then
+  -- Use Shift++arrows to switch between windows
+  vim.keymap.set('n', '<S-left>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
+  vim.keymap.set('n', '<S-right>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
+  vim.keymap.set('n', '<S-down>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
+  vim.keymap.set('n', '<S-up>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+
+  -- Use Shift+arrows to exit terminal and switch between windows
+  vim.keymap.set('n', '<S-left>', '<C-\\><C-n><C-w><C-h>', { desc = 'Move focus to the left window' })
+  vim.keymap.set('n', '<S-right>', '<C-\\><C-n><C-w><C-l>', { desc = 'Move focus to the right window' })
+  vim.keymap.set('n', '<S-down>', '<C-\\><C-n><C-w><C-j>', { desc = 'Move focus to the lower window' })
+  vim.keymap.set('n', '<S-up>', '<C-\\><C-n><C-w><C-k>', { desc = 'Move focus to the upper window' })
+else
+  -- Use CTRL+arrows to switch between windows
+  vim.keymap.set('n', '<C-left>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
+  vim.keymap.set('n', '<C-right>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
+  vim.keymap.set('n', '<C-down>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
+  vim.keymap.set('n', '<C-up>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+
+  -- Use CTRL+arrows to exit terminal and switch between windows
+  vim.keymap.set('n', '<C-left>', '<C-\\><C-n><C-w><C-h>', { desc = 'Move focus to the left window' })
+  vim.keymap.set('n', '<C-right>', '<C-\\><C-n><C-w><C-l>', { desc = 'Move focus to the right window' })
+  vim.keymap.set('n', '<C-down>', '<C-\\><C-n><C-w><C-j>', { desc = 'Move focus to the lower window' })
+  vim.keymap.set('n', '<C-up>', '<C-\\><C-n><C-w><C-k>', { desc = 'Move focus to the upper window' })
+end
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
@@ -227,6 +245,22 @@ vim.opt.rtp:prepend(lazypath)
 --
 -- NOTE: Here is where you install your plugins.
 require('lazy').setup({
+  {
+    'okuuva/auto-save.nvim',
+    opts = {},
+    config = function()
+      vim.keymap.set('n', '<leader>ts', '<cmd>ASToggle<CR>', { desc = '[T]oggle Auto [S]ave' })
+      vim.cmd 'ASToggle'
+    end,
+  },
+  {
+    'akinsho/toggleterm.nvim',
+    opts = {
+      open_mapping = [[<C-\>]],
+      insert_mappings = true,
+      terminal_mappings = true,
+    },
+  },
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
 
@@ -813,7 +847,7 @@ require('lazy').setup({
 
           -- If you prefer more traditional completion keymaps,
           -- you can uncomment the following lines
-          --['<CR>'] = cmp.mapping.confirm { select = true },
+          ['<CR>'] = cmp.mapping.confirm { select = true },
           --['<Tab>'] = cmp.mapping.select_next_item(),
           --['<S-Tab>'] = cmp.mapping.select_prev_item(),
 
