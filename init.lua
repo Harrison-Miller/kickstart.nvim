@@ -191,6 +191,11 @@ if darwin then
   vim.keymap.set('n', '<S-down>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
   vim.keymap.set('n', '<S-up>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
+  vim.keymap.set('i', '<S-left>', '<Esc><C-w><C-h>', { desc = 'Move focus to the left window' })
+  vim.keymap.set('i', '<S-right>', '<Esc><C-w><C-l>', { desc = 'Move focus to the right window' })
+  vim.keymap.set('i', '<S-down>', '<Esc><C-w><C-j>', { desc = 'Move focus to the lower window' })
+  vim.keymap.set('i', '<S-up>', '<Esc><C-w><C-k>', { desc = 'Move focus to the upper window' })
+
   -- Use Shift+arrows to exit terminal and switch between windows
   vim.keymap.set('t', '<S-left>', '<C-\\><C-n><C-w><C-h>', { desc = 'Move focus to the left window' })
   vim.keymap.set('t', '<S-right>', '<C-\\><C-n><C-w><C-l>', { desc = 'Move focus to the right window' })
@@ -202,6 +207,11 @@ else
   vim.keymap.set('n', '<C-right>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
   vim.keymap.set('n', '<C-down>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
   vim.keymap.set('n', '<C-up>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+
+  vim.keymap.set('i', '<C-left>', '<Esc><C-w><C-h>', { desc = 'Move focus to the left window' })
+  vim.keymap.set('i', '<C-right>', '<Esc><C-w><C-l>', { desc = 'Move focus to the right window' })
+  vim.keymap.set('i', '<C-down>', '<Esc><C-w><C-j>', { desc = 'Move focus to the lower window' })
+  vim.keymap.set('i', '<C-up>', '<Esc><C-w><C-k>', { desc = 'Move focus to the upper window' })
 
   -- Use CTRL+arrows to exit terminal and switch between windows
   vim.keymap.set('t', '<C-left>', '<C-\\><C-n><C-w><C-h>', { desc = 'Move focus to the left window' })
